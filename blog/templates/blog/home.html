@@ -1,0 +1,43 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  Start Quiz
+  </button>
+  {% for quiz_data in quiz_data %}
+    <article class="media content-section">
+  
+      
+        <div class="media-body">
+          
+          <h3>{{ quiz_data.name }}<small class="text-muted">   {{ quiz_data.description }}</small></h3> 
+          <h5>Duration : {{ quiz_data.time_limit }}minutes</h5>
+          <p class="article-content">Total Question: {{ quiz_data.total_questions }}</p>
+        </div>
+      </article>
+        {% endfor %}
+  
+      <form name='getstart' action="{% url "start" %}" method="post" >
+        {% csrf_token %}
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">    
+            <div class="modal-body">
+              <div class="input-group input-group-lg">
+              <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-lg">Quiz name</span>
+                  <span class="input-group-text" id="inputGroup-sizing-rg">Code</span>
+                </div>
+                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" name="Quizname">
+                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-rg" name="code">
+              </div>                  
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Start</button>
+            </div>
+          </div>
+        </div>
+      </div>
+     </form>
+
+{% endblock content %}

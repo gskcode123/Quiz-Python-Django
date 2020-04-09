@@ -1,0 +1,86 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+ <div class="result">
+      <div class="card" style="width: 45rem;">
+  
+        <div class="card-body">
+<p><label id='qq'>{{ question_id }}</label>/<label id='tq'>{{tq}}</label></p>
+    <h5 class="card-title" id="question">{{ ques.text }}</h5>
+      <ul class="list-group">
+        <li class="list-group-item"><input  type="radio" name="exampleRadios" id="A" value="A"><label id='AA'> {{ ques.option_A }}</label></li>
+        <li class="list-group-item"><input  type="radio" name="exampleRadios" id="B" value="B"><label id='BB'> {{ ques.option_B }}</label></li>
+        <li class="list-group-item"><input  type="radio" name="exampleRadios" id="C" value="C"><label id='CC'> {{ ques.option_C }}</label></li>
+        <li class="list-group-item"><input  type="radio" name="exampleRadios" id="D" value="D"><label id='DD'> {{ ques.option_D }}</label></li>
+      </ul>
+      <button type="submit" class="btn btn-primary" id="Next">Next</button>
+
+  </div>
+</div>
+</div>
+
+{% endblock content %}
+{% block javascript %}
+<script type="text/javascript">
+
+
+    function printDiv(divName) {
+        var printContents = document.getElementById(divName).innerHTML;
+        w=window.open();
+        w.document.write(printContents);
+        w.print();
+        w.close();
+    }
+  $('#Next').click(function(){
+
+    var answer=''; 
+var selected_radio;
+            var ele = document.getElementsByName('exampleRadios'); 
+             
+            for(i = 0; i < ele.length; i++) { 
+                if(ele[i].checked) {
+                
+                          answer=ele[i].value;
+                          selected_radio=ele[i];
+                }
+             
+                }
+                if (answer==''){
+                  alert('Select atleast one option!!')
+                  exit()
+            } 
+   
+         
+     $.ajax({
+      type:"POST",
+      url: "{%url "next" %}",
+      data: {
+      'question_id':1,
+      'answer_user':answer,
+      'csrfmiddlewaretoken': '{{ csrf_token }}'
+    },
+          success: function(data) {
+            if($('#qq').text()==$('#tq').text()){
+          alert('Quiz finished. Click ok to get result');
+          // $('.card').style.display=none;
+          $('.result').html(data);
+          
+        }
+        selected_radio.checked=false;
+        $( '#question' ).text(data['text']);
+        $( '#AA' ).text(data['option_A']);
+        $( '#BB' ).text(data['option_B']);
+        $( '#CC' ).text(data['option_C']);
+        $( '#DD' ).text(data['option_D']);
+        $( '#qq' ).text(data['next_q']);
+        if($('#qq').text()==$('#tq').text()){
+          $('#Next').text('Submit');
+        }
+      }
+    })
+  });
+</script>
+
+{% endblock javascript %}
+
+
+

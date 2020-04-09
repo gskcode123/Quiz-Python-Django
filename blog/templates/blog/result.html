@@ -1,0 +1,27 @@
+<diV name="printData">
+  <h2><span class="label label-default">Result: {{status}}</span></h2>
+  <h2><span class="label label-default">Percentage: {{score}}%</span></h2>
+    {% for qdetail,ans in data %}
+    <div class="resultcard" style="width: 45rem;">
+  
+        <div class="card-body">
+    <h5 class="card-title" id="question">{{ forloop.counter}}. {{ qdetail.text }}</h5>
+      <ul class="list-group">
+        <li class="list-group-item"><label id='AA'>(A)  {{ qdetail.option_A }}</label></li>
+        <li class="list-group-item"><label id='BB'>(B)  {{ qdetail.option_B }}</label></li>
+        <li class="list-group-item"><label id='CC'>(C)  {{ qdetail.option_C }}</label></li>
+        <li class="list-group-item"><label id='DD'>(D)  {{ qdetail.option_D }}</label></li>
+        <li class="list-group-item">Answer: {{ qdetail.Answer }} </li>
+        <li class="list-group-item">Your Answer: {{ ans }} </li>
+
+    </ul>
+</div>
+</div>
+{% endfor %}
+
+ 
+  <button class="btn btn-primary" id="sub" onclick="javascript:window.print();" >Save as pdf</button>
+
+
+
+</diV>

@@ -1,0 +1,19 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+    {% for data in data %}
+    <article class="media content-section">
+        <div class="media-body">
+          
+            <h3 name='QuizName'>{{ data.quiz_name }}</h3> 
+          
+          
+          <p class="article-content">Passing Percentage: {{ data.passing_percentage }} %</p>
+          <p class="article-content">Your Percentage: {{ data.score }} %</p>
+          
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" disabled>{{ data.status }}
+          </button>
+        
+        </div>
+      </article>
+    {% endfor %}
+{% endblock content %}
